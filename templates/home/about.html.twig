@@ -1,0 +1,388 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos - Juice & Smoothie Store{% endblock %}
+
+{% block body %}
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        color: white;
+        padding: 80px 0 60px;
+        text-align: center;
+        border-radius: 20px;
+        margin: 30px auto;
+        max-width: 95%;
+    }
+    
+    .about-hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    
+    .about-hero p {
+        font-size: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.95;
+    }
+    
+    .about-section {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        text-align: center;
+        font-size: 36px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .section-subtitle {
+        text-align: center;
+        color: #666;
+        font-size: 18px;
+        margin-bottom: 50px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .story-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(255, 138, 91, 0.1);
+        margin-bottom: 30px;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .story-card h3 {
+        color: #FF8A5B;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+    
+    .story-card p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 16px;
+    }
+    
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    
+    .value-card {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .value-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 30px rgba(255, 138, 91, 0.25);
+        border-color: #FF8A5B;
+    }
+    
+    .value-icon {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+    
+    .value-card h4 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .value-card p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .stats-section {
+        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        color: white;
+        padding: 60px 0;
+        margin: 60px auto;
+        border-radius: 20px;
+        max-width: 95%;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .stat-item h3 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .stat-item p {
+        font-size: 18px;
+        opacity: 0.95;
+    }
+    
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    
+    .team-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(255, 138, 91, 0.25);
+        border-color: #FF8A5B;
+    }
+    
+    .team-avatar {
+        width: 100%;
+        height: 250px;
+        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+    }
+    
+    .team-info {
+        padding: 25px;
+        text-align: center;
+    }
+    
+    .team-info h4 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    .team-info .role {
+        color: #FF8A5B;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    
+    .team-info p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    
+    .cta-section {
+        background: #f8f9fa;
+        padding: 60px 0;
+        text-align: center;
+        border-radius: 20px;
+        margin: 30px auto;
+        max-width: 95%;
+    }
+    
+    .cta-section h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .cta-section p {
+        color: #666;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    
+    .btn-cta {
+        display: inline-block;
+        padding: 15px 40px;
+        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(255, 138, 91, 0.4);
+        border: none;
+    }
+    
+    .btn-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(255, 138, 91, 0.6);
+        color: white;
+        background: linear-gradient(135deg, #FF9A6B 0%, #FF7B55 100%);
+    }
+    
+    body {
+        background-color: #f5f5f5;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="about-hero">
+    <div class="container">
+        <h1>À propos de nous</h1>
+        <p>Découvrez l'histoire de Juice & Smoothie Store, votre destination pour des boissons naturelles et délicieuses</p>
+    </div>
+</div>
+
+<!-- Notre Histoire -->
+<div class="about-section">
+    <div class="container">
+        <h2 class="section-title">Notre Histoire</h2>
+        <p class="section-subtitle">Une passion pour les boissons saines et savoureuses</p>
+        
+        <div class="story-card">
+            <h3>🌱 Comment tout a commencé</h3>
+            <p>
+                Juice & Smoothie Store est né d'une passion pour une vie saine et des saveurs authentiques. 
+                Fondée en 2020, notre entreprise s'est donnée pour mission de rendre les boissons naturelles 
+                accessibles à tous. Nous croyons que la santé passe par une alimentation de qualité, et nos 
+                jus, smoothies et cocktails détox sont préparés avec des ingrédients 100% naturels, 
+                sans conservateurs ni additifs.
+            </p>
+        </div>
+        
+        <div class="story-card">
+            <h3>🎯 Notre Mission</h3>
+            <p>
+                Notre mission est simple : offrir à nos clients des boissons délicieuses et nutritives qui 
+                contribuent à leur bien-être quotidien. Chaque recette est soigneusement élaborée pour 
+                maximiser les bienfaits des fruits et légumes tout en garantissant un goût exceptionnel. 
+                Nous travaillons avec des producteurs locaux pour garantir la fraîcheur et la qualité de 
+                nos ingrédients.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Statistiques -->
+<div class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>1000+</h3>
+                <p>Clients satisfaits</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Recettes uniques</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Naturel</p>
+            </div>
+            <div class="stat-item">
+                <h3>4.8★</h3>
+                <p>Note moyenne</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nos Valeurs -->
+<div class="about-section">
+    <div class="container">
+        <h2 class="section-title">Nos Valeurs</h2>
+        <p class="section-subtitle">Ce qui nous guide au quotidien</p>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🌿</div>
+                <h4>100% Naturel</h4>
+                <p>Nous utilisons uniquement des ingrédients naturels, sans conservateurs ni additifs artificiels.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🥇</div>
+                <h4>Qualité Premium</h4>
+                <p>Nos fruits et légumes sont soigneusement sélectionnés auprès de producteurs locaux de confiance.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">💚</div>
+                <h4>Santé & Bien-être</h4>
+                <p>Chaque boisson est conçue pour apporter les nutriments essentiels à votre corps.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">♻️</div>
+                <h4>Éco-responsable</h4>
+                <p>Nous nous engageons pour l'environnement avec des emballages recyclables et durables.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notre Équipe -->
+<div class="about-section" style="background: transparent;">
+    <div class="container">
+        <h2 class="section-title">Notre Équipe</h2>
+        <p class="section-subtitle">Les passionnés derrière vos boissons préférées</p>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar">👨‍🍳</div>
+                <div class="team-info">
+                    <h4>Alexandre Martin</h4>
+                    <p class="role">Fondateur & Chef</p>
+                    <p>Passionné de nutrition et de gastronomie, Alexandre crée des recettes innovantes et savoureuses.</p>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">👩‍💼</div>
+                <div class="team-info">
+                    <h4>Sophie Dubois</h4>
+                    <p class="role">Nutritionniste</p>
+                    <p>Experte en nutrition, Sophie s'assure que chaque boisson apporte les meilleurs bienfaits.</p>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-avatar">👨‍🌾</div>
+                <div class="team-info">
+                    <h4>Pierre Lefebvre</h4>
+                    <p class="role">Responsable Qualité</p>
+                    <p>Pierre veille à la sélection des meilleurs ingrédients auprès de nos producteurs partenaires.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="cta-section">
+    <div class="container">
+        <h2>Prêt à découvrir nos boissons ?</h2>
+        <p>Explorez notre catalogue et trouvez votre boisson préférée</p>
+        <a href="{{ path('app_home') }}" class="btn-cta">Découvrir nos produits</a>
+    </div>
+</div>
+
+
+{% endblock %}

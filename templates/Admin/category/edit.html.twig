@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Category - Admin{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <h1><i class="bi bi-pencil"></i> Edit Category: {{ category.name }}</h1>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Update Category
+                    </button>
+                    <a href="{{ path('admin_category_index') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

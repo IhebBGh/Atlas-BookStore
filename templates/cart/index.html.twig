@@ -1,0 +1,139 @@
+{# templates/cart/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block body %}
+<h1 class="mb-4"><i class="bi bi-cart"></i> Shopping Cart</h1>
+
+{# Note: This template requires CartController and CartService from your backend teammate #}
+
+{% if cartItems is empty %}
+{# Empty Cart State #}
+<div class="card shadow-sm text-center py-5">
+    <div class="card-body">
+        <i class="bi bi-cart-x display-1 text-muted"></i>
+        <h3 class="mt-4">Your cart is empty</h3>
+        <p class="text-muted">Add some delicious juices to get started!</p>
+        <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-shop"></i> Continue Shopping
+        </a>
+    </div>
+</div>
+{% else %}
+{# Cart with Items #}
+<div class="row">
+    <div class="col-md-8">
+        {% for item in cartItems %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            {% if item.product.image %}
+                                <img src="{{ asset('uploads/products/' ~ item.product.image) }}" 
+                                     class="img-fluid rounded" 
+                                     alt="{{ item.product.Nom }}">
+                            {% else %}
+                                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size: 3rem;">🥤</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <h5 class="mb-1">{{ item.product.Nom }}</h5>
+                            <p class="text-muted mb-1">{{ item.product.price }} € each</p>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <form method="post" action="{{ path('app_update_cart', {id: item.product.id}) }}">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-outline-secondary" 
+                                            onclick="this.form.querySelector('input[name=quantity]').value = Math.max(1, parseInt(this.form.querySelector('input[name=quantity]').value) - 1); this.form.submit();">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    <input type="number" 
+                                           name="quantity" 
+                                           class="form-control text-center" 
+                                           value="{{ item.quantity }}" 
+                                           min="1"
+                                           onchange="this.form.submit()">
+                                    <button type="button" class="btn btn-outline-secondary" 
+                                            onclick="this.form.querySelector('input[name=quantity]').value = parseInt(this.form.querySelector('input[name=quantity]').value) + 1; this.form.submit();">
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <h5 class="text-primary mb-0">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</h5>
+                        </div>
+                        
+                        <div class="col-md-1 text-end">
+                            <a href="{{ path('app_remove_from_cart', {id: item.product.id}) }}" 
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Remove this item from cart?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Continue Shopping
+            </a>
+            <a href="{{ path('app_clear_cart') }}" 
+               class="btn btn-outline-danger"
+               onclick="return confirm('Clear all items from cart?')">
+                <i class="bi bi-trash"></i> Clear Cart
+            </a>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-cart-check"></i> Cart Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                    <h5 class="mb-0">Total:</h5>
+                    <h4 class="mb-0 text-primary">{{ total|number_format(2, ',', ' ') }} €</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 mt-3">
+            <a href="{{ path('app_checkout') }}" class="btn btn-success btn-lg">
+                <i class="bi bi-credit-card"></i> Proceed to Checkout
+            </a>
+            <a href="{{ path('app_home') }}" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left"></i> Continue Shopping
+            </a>
+        </div>
+        
+        <div class="card mt-3 bg-light">
+            <div class="card-body">
+                <h6 class="card-title"><i class="bi bi-gift"></i> Special Offers</h6>
+                <ul class="list-unstyled mb-0 small">
+                    <li><i class="bi bi-check-circle text-success"></i> Free shipping on orders over 50€</li>
+                    <li><i class="bi bi-check-circle text-success"></i> 10% off your first order</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Fresh daily guarantee</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+// Quantity updates are handled by form submission
+</script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Home - Fresh Juices & Smoothies{% endblock %}
+
+{% block body %}
+{# Hero Section #}
+<div class="hero-section">
+    <div style="font-size: 4rem; margin-bottom: 1rem;">🍹</div>
+    <h1 class="display-4 fw-bold">Fresh Juices & Smoothies</h1>
+    <p class="lead">Healthy, Delicious, and Made Fresh Daily!</p>
+    <a href="#products" class="btn btn-light btn-lg mt-3">
+        <i class="bi bi-arrow-down-circle"></i> Explore Products
+    </a>
+</div>
+
+{# Products Section #}
+<div id="products" class="mb-4"></div>
+
+{# All Products Section #}
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            <i class="bi bi-cup-straw"></i> All Products
+        </h2>
+        <span class="badge bg-primary">{{ products|length }} products found</span>
+    </div>
+    
+    {% if products is empty %}
+        <div class="alert alert-info text-center py-5">
+            <i class="bi bi-info-circle display-1"></i>
+            <h4 class="mt-3">No products available yet</h4>
+            <p>Products will appear once the backend is configured.</p>
+        </div>
+    {% else %}
+        <div class="row g-4">
+            {% for product in products %}
+                <div class="col-md-6 col-lg-3">
+                    {% include 'components/product-card.html.twig' with {'product': product} %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    // Smooth scroll to products section
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    
+    // Add hover effect to category cards
+    document.querySelectorAll('.hover-effect').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+</script>
+{% endblock %}

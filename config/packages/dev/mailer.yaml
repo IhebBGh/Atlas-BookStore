@@ -1,0 +1,11 @@
+framework:
+    mailer:
+        # In development, save emails to files instead of sending them
+        # This overrides the .env MAILER_DSN in dev environment
+        dsn: 'file://%kernel.project_dir%/var/mail'
+        
+when@test:
+    framework:
+        mailer:
+            dsn: 'null://null'
+

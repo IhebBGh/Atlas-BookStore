@@ -1,0 +1,54 @@
+{# templates/components/cart-summary.html.twig #}
+{# Usage: {% include 'components/cart-summary.html.twig' with {'cart': cart, 'total': total} %} #}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-cart-check"></i> Cart Summary</h5>
+    </div>
+    <div class="card-body">
+        {% if cart is empty %}
+            <div class="text-center py-4">
+                <i class="bi bi-cart-x display-1 text-muted"></i>
+                <p class="text-muted mt-3">Your cart is empty</p>
+                <a href="{{ path('app_home') }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-shop"></i> Start Shopping
+                </a>
+            </div>
+        {% else %}
+            {# Cart Items List #}
+            <ul class="list-unstyled">
+                {% for item in cart %}
+                    <li class="mb-3 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">{{ item.product.Nom }}</h6>
+                                <small class="text-muted">
+                                    {{ item.product.price }} € × {{ item.quantity }}
+                                </small>
+                            </div>
+                            <strong class="text-primary">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</strong>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            
+            {# Total Section #}
+            <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                <h5 class="mb-0">Total:</h5>
+                <h4 class="mb-0 text-primary">{{ total|number_format(2, ',', ' ') }} €</h4>
+            </div>
+            
+            {# Action Buttons (Optional - only show if not on cart page) #}
+            {% if app.request.get('_route') != 'app_cart' %}
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{{ path('app_cart') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-cart"></i> View Cart
+                    </a>
+                    <a href="{{ path('app_checkout') }}" class="btn btn-success">
+                        <i class="bi bi-credit-card"></i> Checkout
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
