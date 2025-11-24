@@ -20,18 +20,18 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('Nom', TextType::class, [
-                'label' => 'Nom du produit',
+                'label' => 'Product Name',
             ])
             ->add('Description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => ['rows' => 4],
             ])
             ->add('price', MoneyType::class, [
-                'label' => 'Prix (€)',
-                'currency' => 'EUR',
+                'label' => 'Price (TND)',
+                'currency' => 'TND',
             ])
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Image du produit (JPEG, PNG)',
+                'label' => 'Product Image (JPEG, PNG)',
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,

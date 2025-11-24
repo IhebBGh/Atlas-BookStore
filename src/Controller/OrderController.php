@@ -27,7 +27,7 @@ class OrderController extends AbstractController
         $order = $orderRepository->find($id);
 
         if (!$order || $order->getUser() !== $this->getUser()) {
-            $this->addFlash('error', 'Commande introuvable.');
+            $this->addFlash('error', 'Order not found.');
             return $this->redirectToRoute('app_orders');
         }
 

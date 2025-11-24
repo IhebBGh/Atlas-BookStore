@@ -100,13 +100,13 @@
                                 <small class="text-muted">Qty: {{ item.quantity }}</small>
                             </div>
                             <div>
-                                <strong>{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</strong>
+                                <strong>{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</strong>
                             </div>
                         </div>
                     {% endfor %}
                     <div class="order-summary-item" style="font-size: 1.2rem; font-weight: bold; border-top: 2px solid #333; margin-top: 1rem; padding-top: 1rem;">
                         <span>Total:</span>
-                        <span>{{ total|number_format(2, ',', ' ') }} €</span>
+                        <span>{{ total|number_format(2, ',', ' ') }} TND</span>
                     </div>
                 </div>
 

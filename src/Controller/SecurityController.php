@@ -12,9 +12,9 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // obtenir l'erreur de connexion s’il y en a une
+        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // dernier nom d’utilisateur entré
+        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
@@ -26,6 +26,6 @@ class SecurityController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
-        // Symfony gère la déconnexion automatiquement
+        // Symfony handles logout automatically
     }
 }

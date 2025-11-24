@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Order;
 use App\Repository\OrderRepository;
-use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +31,7 @@ class AdminOrderController extends AbstractController
         $order = $orderRepository->find($id);
 
         if (!$order) {
-            $this->addFlash('error', 'Commande introuvable.');
+            $this->addFlash('error', 'Order not found.');
             return $this->redirectToRoute('admin_order_index');
         }
 
@@ -46,13 +45,12 @@ class AdminOrderController extends AbstractController
         int $id,
         OrderRepository $orderRepository,
         EntityManagerInterface $entityManager,
-        Request $request,
-        EmailService $emailService
+        Request $request
     ): Response {
         $order = $orderRepository->find($id);
 
         if (!$order) {
-            $this->addFlash('error', 'Commande introuvable.');
+            $this->addFlash('error', 'Order not found.');
             return $this->redirectToRoute('admin_order_index');
         }
 
@@ -61,16 +59,12 @@ class AdminOrderController extends AbstractController
         $order->setStatus($status);
         $entityManager->flush();
 
-        // Send email if status changed
+        // Notify admin about status change
         if ($oldStatus !== $status) {
-            try {
-                $emailService->sendOrderStatusUpdate($order);
-            } catch (\Exception $e) {
-                // Log error but don't fail
-            }
+            $this->addFlash('success', 'Order #' . $order->getId() . ' status updated from "' . $oldStatus . '" to "' . $status . '". The customer can view the updated status in their orders.');
+        } else {
+            $this->addFlash('success', 'Order status updated.');
         }
-
-        $this->addFlash('success', 'Statut de la commande mis à jour.');
         return $this->redirectToRoute('admin_order_show', ['id' => $id]);
     }
 }

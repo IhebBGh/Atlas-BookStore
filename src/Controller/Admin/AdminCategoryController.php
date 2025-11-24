@@ -41,7 +41,7 @@ class AdminCategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Catégorie créée avec succès.');
+            $this->addFlash('success', 'Category created successfully.');
             return $this->redirectToRoute('admin_category_index');
         }
 
@@ -56,7 +56,7 @@ class AdminCategoryController extends AbstractController
         $category = $categoryRepository->find($id);
 
         if (!$category) {
-            $this->addFlash('error', 'Catégorie introuvable.');
+            $this->addFlash('error', 'Category not found.');
             return $this->redirectToRoute('admin_category_index');
         }
 
@@ -69,7 +69,7 @@ class AdminCategoryController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Catégorie mise à jour.');
+            $this->addFlash('success', 'Category updated.');
             return $this->redirectToRoute('admin_category_index');
         }
 
@@ -85,14 +85,14 @@ class AdminCategoryController extends AbstractController
         $category = $categoryRepository->find($id);
 
         if (!$category) {
-            $this->addFlash('error', 'Catégorie introuvable.');
+            $this->addFlash('error', 'Category not found.');
             return $this->redirectToRoute('admin_category_index');
         }
 
         $entityManager->remove($category);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Catégorie supprimée.');
+        $this->addFlash('success', 'Category deleted.');
         return $this->redirectToRoute('admin_category_index');
     }
 }

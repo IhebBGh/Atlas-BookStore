@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Repository\OrderRepository;
 use App\Service\CartService;
-use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +19,7 @@ class PaymentController extends AbstractController
     public function process(
         Request $request,
         CartService $cartService,
-        EntityManagerInterface $entityManager,
-        EmailService $emailService
+        EntityManagerInterface $entityManager
     ): Response {
         $cartItems = $cartService->getCart();
         
@@ -63,15 +61,8 @@ class PaymentController extends AbstractController
         $entityManager->persist($order);
         $entityManager->flush();
 
-        // Send confirmation email
-        try {
-            $emailService->sendOrderConfirmation($order);
-        } catch (\Exception $e) {
-            // Log error but don't fail the order
-        }
-
         $cartService->clear();
-        $this->addFlash('success', 'Order placed successfully! Check your email for confirmation.');
+        $this->addFlash('success', 'Order placed successfully! Your order #' . $order->getId() . ' has been confirmed.');
 
         return $this->redirectToRoute('app_order_show', ['id' => $order->getId()]);
     }

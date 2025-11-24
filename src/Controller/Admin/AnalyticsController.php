@@ -47,10 +47,16 @@ class AnalyticsController extends AbstractController
         $monthlyRevenue = [];
         for ($i = 5; $i >= 0; $i--) {
             $month = date('Y-m', strtotime("-$i months"));
+            $startDate = new \DateTime($month . '-01 00:00:00');
+            $endDate = new \DateTime($month . '-01 00:00:00');
+            $endDate->modify('+1 month');
+            
             $revenue = $orderRepository->createQueryBuilder('o')
                 ->select('SUM(o.total) as total')
-                ->where('DATE_FORMAT(o.createdAt, \'%Y-%m\') = :month')
-                ->setParameter('month', $month)
+                ->where('o.createdAt >= :startDate')
+                ->andWhere('o.createdAt < :endDate')
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate)
                 ->getQuery()
                 ->getSingleScalarResult() ?? 0;
             $monthlyRevenue[$month] = (float) $revenue;

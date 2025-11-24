@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MessageRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +16,22 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(OrderRepository $orderRepository): Response
+    public function index(OrderRepository $orderRepository, MessageRepository $messageRepository): Response
     {
         $user = $this->getUser();
         $recentOrders = $orderRepository->findByUser($user);
+        $recentMessages = $messageRepository->findByUser($user);
+        
+        // Count messages with responses
+        $messagesWithResponse = array_filter($recentMessages, function($message) {
+            return $message->getAdminResponse() !== null;
+        });
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
             'recentOrders' => array_slice($recentOrders, 0, 5),
+            'recentMessages' => array_slice($recentMessages, 0, 3),
+            'messagesWithResponse' => count($messagesWithResponse),
         ]);
     }
 
@@ -37,12 +46,12 @@ class ProfileController extends AbstractController
         $newPassword = $request->request->get('new_password');
 
         if (!$passwordHasher->isPasswordValid($user, $oldPassword)) {
-            $this->addFlash('error', 'Mot de passe actuel incorrect.');
+            $this->addFlash('error', 'Current password is incorrect.');
             return $this->redirectToRoute('app_profile');
         }
 
         if (strlen($newPassword) < 6) {
-            $this->addFlash('error', 'Le nouveau mot de passe doit contenir au moins 6 caractères.');
+            $this->addFlash('error', 'The new password must contain at least 6 characters.');
             return $this->redirectToRoute('app_profile');
         }
 
@@ -51,7 +60,7 @@ class ProfileController extends AbstractController
 
         $entityManager->flush();
 
-        $this->addFlash('success', 'Mot de passe modifié avec succès.');
+        $this->addFlash('success', 'Password changed successfully.');
         return $this->redirectToRoute('app_profile');
     }
 }

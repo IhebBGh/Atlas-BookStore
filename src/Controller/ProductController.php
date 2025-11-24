@@ -24,7 +24,7 @@ class ProductController extends AbstractController
         $product = $productRepository->find($id);
 
         if (!$product) {
-            $this->addFlash('error', 'Produit introuvable.');
+            $this->addFlash('error', 'Product not found.');
             return $this->redirectToRoute('app_home');
         }
 
@@ -69,7 +69,7 @@ class ProductController extends AbstractController
         $category = $categoryRepository->findOneBy(['slug' => $slug]);
 
         if (!$category) {
-            $this->addFlash('error', 'Catégorie introuvable.');
+            $this->addFlash('error', 'Category not found.');
             return $this->redirectToRoute('app_home');
         }
 

@@ -32,15 +32,15 @@
                                 <tr>
                                     <td>{{ item.product.Nom }}</td>
                                     <td>{{ item.quantity }}</td>
-                                    <td>{{ item.price|number_format(2, ',', ' ') }} €</td>
-                                    <td><strong>{{ item.getSubtotal()|number_format(2, ',', ' ') }} €</strong></td>
+                                    <td>{{ item.price|number_format(2, ',', ' ') }} TND</td>
+                                    <td><strong>{{ item.getSubtotal()|number_format(2, ',', ' ') }} TND</strong></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                                <td><strong>{{ order.total|number_format(2, ',', ' ') }} €</strong></td>
+                                <td><strong>{{ order.total|number_format(2, ',', ' ') }} TND</strong></td>
                             </tr>
                         </tfoot>
                     </table>

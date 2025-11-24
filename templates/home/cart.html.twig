@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Panier - Juice & Smoothie{% endblock %}
+{% block title %}My Cart - Juice & Smoothie{% endblock %}
 
 {% block body %}
 <div class="container my-5">
-    <h1 class="text-center mb-4">🛒 Mon Panier</h1>
+    <h1 class="text-center mb-4">🛒 My Cart</h1>
 
     {% if cartItems|length > 0 %}
         <div class="row mb-4">
@@ -12,10 +12,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Produit</th>
-                            <th>Quantité</th>
-                            <th>Prix unitaire</th>
-                            <th>Sous-total</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Subtotal</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -26,15 +26,15 @@
                                 <td>
                                     <form method="post" action="{{ path('app_update_cart', {id: item.product.id}) }}">
                                         <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99" class="form-control w-50 d-inline" />
-                                        <button type="submit" class="btn btn-sm btn-primary ms-1">Modifier</button>
+                                        <button type="submit" class="btn btn-sm btn-primary ms-1">Update</button>
                                     </form>
                                 </td>
-                                <td>{{ item.product.price|number_format(2, ',', ' ') }} €</td>
-                                <td>{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</td>
+                                <td>{{ item.product.price|number_format(2, ',', ' ') }} TND</td>
+                                <td>{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</td>
                                 <td>
                                     <a href="{{ path('app_remove_from_cart', {id: item.product.id}) }}" 
                                        class="btn btn-sm btn-danger">
-                                        Supprimer
+                                        Remove
                                     </a>
                                 </td>
                             </tr>
@@ -48,9 +48,9 @@
             <div class="col-md-6 offset-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Total : {{ total|number_format(2, ',', ' ') }} €</h5>
+                        <h5>Total: {{ total|number_format(2, ',', ' ') }} TND</h5>
                         <a href="{{ path('app_checkout') }}" class="btn btn-success w-100">
-                            <i class="bi bi-credit-card"></i> Réserver / Commander
+                            <i class="bi bi-credit-card"></i> Checkout / Order
                         </a>
                     </div>
                 </div>
@@ -58,10 +58,10 @@
         </div>
     {% else %}
         <div class="alert alert-info text-center">
-            Votre panier est vide.
+            Your cart is empty.
         </div>
         <div class="text-center mt-4">
-            <a href="{{ path('app_home') }}" class="btn btn-primary">Retour aux produits</a>
+            <a href="{{ path('app_home') }}" class="btn btn-primary">Back to Products</a>
         </div>
     {% endif %}
 </div>

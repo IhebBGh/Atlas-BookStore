@@ -43,6 +43,49 @@
         </div>
 
         <div class="col-md-8">
+            {# Recent Messages #}
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-envelope"></i> Recent Messages</h5>
+                    <a href="{{ path('app_my_messages') }}" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if recentMessages is empty %}
+                        <p class="text-muted">No messages yet. <a href="{{ path('app_contact') }}">Contact us</a> if you have any questions.</p>
+                    {% else %}
+                        {% if messagesWithResponse > 0 %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle"></i> <strong>{{ messagesWithResponse }}</strong> of your messages have received responses!
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+                        <div class="list-group">
+                            {% for message in recentMessages %}
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">
+                                                {{ message.subject }}
+                                                {% if message.adminResponse %}
+                                                    <span class="badge bg-success ms-2">
+                                                        <i class="bi bi-check-circle"></i> Replied
+                                                    </span>
+                                                {% endif %}
+                                            </h6>
+                                            <small class="text-muted">{{ message.createdAt|date('d/m/Y H:i') }}</small>
+                                        </div>
+                                        <a href="{{ path('app_my_message_show', {id: message.id}) }}" class="btn btn-sm btn-outline-primary">
+                                            View
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Recent Orders #}
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Recent Orders</h5>
@@ -68,7 +111,7 @@
                                         <tr>
                                             <td>#{{ order.id }}</td>
                                             <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                                            <td>{{ order.total|number_format(2, ',', ' ') }} €</td>
+                                            <td>{{ order.total|number_format(2, ',', ' ') }} TND</td>
                                             <td>
                                                 <span class="badge bg-{% if order.status == 'completed' %}success{% elseif order.status == 'pending' %}warning{% else %}info{% endif %}">
                                                     {{ order.status|upper }}

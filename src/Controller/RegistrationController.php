@@ -25,14 +25,14 @@ class RegistrationController extends AbstractController
             $plainPassword = (string) $request->request->get('password', '');
 
             if ($email === '' || $plainPassword === '') {
-                $this->addFlash('error', 'Email et mot de passe sont requis.');
+                $this->addFlash('error', 'Email and password are required.');
                 return $this->redirectToRoute('app_register');
             }
 
-            // Vérifier l'existence d'un utilisateur avec le même email
+            // Check if a user with the same email already exists
             $existing = $userRepository->findOneBy(['email' => $email]);
             if ($existing) {
-                $this->addFlash('error', 'Un utilisateur avec cet email existe déjà.');
+                $this->addFlash('error', 'A user with this email already exists.');
                 return $this->redirectToRoute('app_register');
             }
 
@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Compte créé. Vous pouvez vous connecter.');
+            $this->addFlash('success', 'Account created. You can now log in.');
             return $this->redirectToRoute('app_login');
         }
 

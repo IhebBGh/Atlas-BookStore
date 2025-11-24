@@ -32,7 +32,7 @@
                             <td>#{{ order.id }}</td>
                             <td>{{ order.createdAt|date('d/m/Y H:i') }}</td>
                             <td>{{ order.items|length }} item(s)</td>
-                            <td><strong>{{ order.total|number_format(2, ',', ' ') }} €</strong></td>
+                            <td><strong>{{ order.total|number_format(2, ',', ' ') }} TND</strong></td>
                             <td>
                                 <span class="badge bg-{% if order.status == 'completed' %}success{% elseif order.status == 'pending' %}warning{% else %}info{% endif %}">
                                     {{ order.status|upper }}

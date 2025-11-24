@@ -30,7 +30,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Total Revenue</h5>
-                    <h2 class="text-success">{{ totalRevenue|number_format(2, ',', ' ') }} €</h2>
+                    <h2 class="text-success">{{ totalRevenue|number_format(2, ',', ' ') }} TND</h2>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                                         <tr>
                                             <td>#{{ order.id }}</td>
                                             <td>{{ order.user.email }}</td>
-                                            <td>{{ order.total|number_format(2, ',', ' ') }} €</td>
+                                            <td>{{ order.total|number_format(2, ',', ' ') }} TND</td>
                                             <td>
                                                 <span class="badge bg-{% if order.status == 'completed' %}success{% elseif order.status == 'pending' %}warning{% else %}info{% endif %}">
                                                     {{ order.status|upper }}
@@ -141,13 +141,14 @@
 
 <script>
     const ctx = document.getElementById('revenueChart').getContext('2d');
+    const monthlyRevenueData = {{ monthlyRevenue|json_encode|raw }};
     const revenueChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: {{ monthlyRevenue|keys|json_encode|raw }},
+            labels: Object.keys(monthlyRevenueData),
             datasets: [{
-                label: 'Revenue (€)',
-                data: {{ monthlyRevenue|values|json_encode|raw }},
+                label: 'Revenue (TND)',
+                data: Object.values(monthlyRevenueData),
                 borderColor: 'rgb(255, 107, 53)',
                 backgroundColor: 'rgba(255, 107, 53, 0.1)',
                 tension: 0.4

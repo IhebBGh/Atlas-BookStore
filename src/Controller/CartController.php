@@ -29,14 +29,14 @@ class CartController extends AbstractController
         $product = $productRepository->find($id);
         
         if (!$product) {
-            $this->addFlash('error', 'Produit introuvable.');
+            $this->addFlash('error', 'Product not found.');
             return $this->redirectToRoute('app_home');
         }
 
         $quantity = (int) $request->request->get('quantity', 1);
         $cartService->addProduct($product, $quantity);
 
-        $this->addFlash('success', 'Produit ajouté au panier !');
+        $this->addFlash('success', 'Product added to cart!');
         
         // Redirect back to the page that called this
         $referer = $request->headers->get('referer');
@@ -49,7 +49,7 @@ class CartController extends AbstractController
         $quantity = (int) $request->request->get('quantity', 1);
         $cartService->updateQuantity($id, $quantity);
 
-        $this->addFlash('success', 'Quantité mise à jour.');
+        $this->addFlash('success', 'Quantity updated.');
         return $this->redirectToRoute('app_cart');
     }
 
@@ -57,7 +57,7 @@ class CartController extends AbstractController
     public function remove(int $id, CartService $cartService): Response
     {
         $cartService->removeProduct($id);
-        $this->addFlash('success', 'Produit retiré du panier.');
+        $this->addFlash('success', 'Product removed from cart.');
         return $this->redirectToRoute('app_cart');
     }
 
@@ -65,7 +65,7 @@ class CartController extends AbstractController
     public function clear(CartService $cartService): Response
     {
         $cartService->clear();
-        $this->addFlash('success', 'Panier vidé.');
+        $this->addFlash('success', 'Cart cleared.');
         return $this->redirectToRoute('app_cart');
     }
 
@@ -76,7 +76,7 @@ class CartController extends AbstractController
         $cartItems = $cartService->getCart();
         
         if (empty($cartItems)) {
-            $this->addFlash('error', 'Votre panier est vide.');
+            $this->addFlash('error', 'Your cart is empty.');
             return $this->redirectToRoute('app_cart');
         }
 

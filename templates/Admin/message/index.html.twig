@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messages Management - Admin{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .admin-page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .table thead {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .table thead th {
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .table tbody tr {
+            transition: background 0.3s;
+        }
+        
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        
+        .table-warning {
+            background-color: #fff3cd !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    {# Page Header #}
+    <div class="admin-page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="bi bi-envelope"></i> Messages Management</h1>
+                <p class="mb-0 mt-2">Manage customer inquiries and messages</p>
+            </div>
+            {% if unreadCount > 0 %}
+                <span class="badge bg-danger fs-6">
+                    <i class="bi bi-bell"></i> {{ unreadCount }} unread message{{ unreadCount > 1 ? 's' : '' }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Filter Tabs #}
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link {{ currentStatus == 'all' ? 'active' : '' }}" href="{{ path('admin_message_index', {status: 'all'}) }}">
+                <i class="bi bi-list"></i> All Messages
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ currentStatus == 'new' ? 'active' : '' }}" href="{{ path('admin_message_index', {status: 'new'}) }}">
+                <i class="bi bi-envelope"></i> New
+                {% if currentStatus == 'all' %}
+                    {% set newCount = messages|filter(m => m.status == 'new')|length %}
+                    {% if newCount > 0 %}
+                        <span class="badge bg-danger">{{ newCount }}</span>
+                    {% endif %}
+                {% endif %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ currentStatus == 'read' ? 'active' : '' }}" href="{{ path('admin_message_index', {status: 'read'}) }}">
+                <i class="bi bi-envelope-open"></i> Read
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ currentStatus == 'replied' ? 'active' : '' }}" href="{{ path('admin_message_index', {status: 'replied'}) }}">
+                <i class="bi bi-check-circle"></i> Replied
+            </a>
+        </li>
+    </ul>
+
+    {# Messages Table #}
+    {% if messages is empty %}
+        <div class="alert alert-info text-center py-5">
+            <i class="bi bi-inbox display-1"></i>
+            <h4 class="mt-3">No messages found</h4>
+            <p>There are no messages{% if currentStatus != 'all' %} with status "{{ currentStatus }}"{% endif %}.</p>
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>From</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                        <tr class="{{ message.status == 'new' ? 'table-warning' : '' }}">
+                            <td>
+                                <span class="badge bg-{% if message.status == 'new' %}warning{% elseif message.status == 'read' %}info{% else %}success{% endif %}">
+                                    {% if message.status == 'new' %}
+                                        <i class="bi bi-envelope"></i> New
+                                    {% elseif message.status == 'read' %}
+                                        <i class="bi bi-envelope-open"></i> Read
+                                    {% else %}
+                                        <i class="bi bi-check-circle"></i> Replied
+                                    {% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                <strong>{{ message.name ?? message.user.email ?? 'Anonymous' }}</strong><br>
+                                <small class="text-muted">{{ message.email ?? message.user.email ?? 'No email' }}</small>
+                            </td>
+                            <td>
+                                <strong>{{ message.subject }}</strong>
+                                {% if message.content|length > 50 %}
+                                    <br><small class="text-muted">{{ message.content|slice(0, 50) }}...</small>
+                                {% else %}
+                                    <br><small class="text-muted">{{ message.content }}</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ message.createdAt|date('d/m/Y H:i') }}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_message_show', {id: message.id}) }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

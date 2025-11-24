@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message: {{ message.subject }} - JuiceStore{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-envelope"></i> Message Details</h1>
+        <a href="{{ path('app_my_messages') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Messages
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            {# Your Message #}
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-envelope"></i> Your Message</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong><i class="bi bi-tag"></i> Subject:</strong><br>
+                        {{ message.subject }}
+                    </div>
+
+                    <div class="mb-3">
+                        <strong><i class="bi bi-calendar"></i> Sent:</strong><br>
+                        {{ message.createdAt|date('d/m/Y H:i:s') }}
+                    </div>
+
+                    <div class="mb-3">
+                        <strong><i class="bi bi-chat-left-text"></i> Message:</strong>
+                        <div class="border rounded p-3 mt-2 bg-light">
+                            {{ message.content|nl2br }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Admin Response #}
+            <div class="card">
+                <div class="card-header {% if message.adminResponse %}bg-success{% else %}bg-secondary{% endif %} text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-reply"></i> 
+                        {% if message.adminResponse %}
+                            Admin Response
+                        {% else %}
+                            Waiting for Response
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if message.adminResponse %}
+                        <div class="alert alert-success">
+                            <strong><i class="bi bi-check-circle"></i> Response Received:</strong>
+                            <div class="mt-3 p-3 bg-white rounded border">
+                                {{ message.adminResponse|nl2br }}
+                            </div>
+                            <small class="text-muted mt-2 d-block">
+                                <i class="bi bi-info-circle"></i> This response was provided by our support team.
+                            </small>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info text-center py-4">
+                            <i class="bi bi-clock-history display-4"></i>
+                            <h5 class="mt-3">No response yet</h5>
+                            <p class="mb-0">Our team is reviewing your message and will respond soon.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            {# Message Info #}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-info-circle"></i> Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Status:</strong><br>
+                        {% if message.adminResponse %}
+                            <span class="badge bg-success">
+                                <i class="bi bi-check-circle"></i> Replied
+                            </span>
+                        {% elseif message.status == 'read' %}
+                            <span class="badge bg-info">
+                                <i class="bi bi-envelope-open"></i> Read
+                            </span>
+                        {% else %}
+                            <span class="badge bg-warning">
+                                <i class="bi bi-envelope"></i> New
+                            </span>
+                        {% endif %}
+                    </p>
+                    <p><strong>Sent:</strong><br>
+                        {{ message.createdAt|date('d/m/Y H:i') }}
+                    </p>
+                    {% if message.readAt %}
+                        <p><strong>Read:</strong><br>
+                            {{ message.readAt|date('d/m/Y H:i') }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Actions #}
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-gear"></i> Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{{ path('app_contact') }}" class="btn btn-primary w-100 mb-2">
+                        <i class="bi bi-envelope-plus"></i> Send New Message
+                    </a>
+                    <a href="{{ path('app_my_messages') }}" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-left"></i> Back to Messages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
