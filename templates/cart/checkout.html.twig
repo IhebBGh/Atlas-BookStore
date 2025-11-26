@@ -1,50 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Checkout - JuiceStore{% endblock %}
+{% block title %}Checkout - Atlas Bookshop{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
         .checkout-container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 2rem auto;
         }
         .checkout-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 24px;
             padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 30px 50px rgba(31,27,46,0.08);
             margin-bottom: 1.5rem;
+            border: 1px solid rgba(31,27,46,0.08);
         }
         .order-summary-item {
             display: flex;
             justify-content: space-between;
             padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(31,27,46,0.08);
         }
         .order-summary-item:last-child {
             border-bottom: none;
         }
     </style>
     <script>
-        document.getElementById('card').addEventListener('change', function() {
-            document.getElementById('stripe-form').style.display = this.checked ? 'block' : 'none';
-        });
-        document.getElementById('cash').addEventListener('change', function() {
-            document.getElementById('stripe-form').style.display = this.checked ? 'none' : 'block';
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardRadio = document.getElementById('card');
+            const cashRadio = document.getElementById('cash');
+            const stripeForm = document.getElementById('stripe-form');
+            if (!cardRadio || !cashRadio || !stripeForm) {
+                return;
+            }
+            cardRadio.addEventListener('change', () => {
+                stripeForm.style.display = cardRadio.checked ? 'block' : 'none';
+            });
+            cashRadio.addEventListener('change', () => {
+                stripeForm.style.display = cashRadio.checked ? 'none' : 'block';
+            });
         });
     </script>
 {% endblock %}
 
 {% block body %}
 <div class="checkout-container">
-    <h1 class="mb-4"><i class="bi bi-credit-card"></i> Checkout</h1>
+    <h1 class="mb-4 brand-serif"><i class="bi bi-credit-card"></i> Checkout</h1>
 
     <form method="post" action="{{ path('app_payment_process') }}">
         <div class="row">
             <div class="col-md-8">
                 <div class="checkout-card">
-                    <h3>Shipping Information</h3>
+                    <h3 class="brand-serif">Shipping Information</h3>
                     <div class="form-group mb-3">
                         <label class="form-label">Shipping Address</label>
                         <textarea name="shipping_address" class="form-control" rows="3" required></textarea>
@@ -56,7 +65,7 @@
                 </div>
 
                 <div class="checkout-card">
-                    <h3>Payment Method</h3>
+                    <h3 class="brand-serif">Payment Method</h3>
                     <div class="form-check mb-2">
                         <input class="form-check-input" type="radio" name="payment_method" id="cash" value="cash" checked>
                         <label class="form-check-label" for="cash">Cash on Delivery</label>
@@ -91,7 +100,7 @@
 
             <div class="col-md-4">
                 <div class="checkout-card">
-                    <h3>Order Summary</h3>
+                    <h3 class="brand-serif">Order Summary</h3>
                     {% for item in cartItems %}
                         <div class="order-summary-item">
                             <div>

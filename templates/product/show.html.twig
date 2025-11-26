@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ product.Nom }} - JuiceStore{% endblock %}
+{% block title %}{{ product.Nom }} - Atlas Bookshop{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -48,8 +48,8 @@
                 {% if product.image %}
                     <img src="{{ asset('uploads/products/' ~ product.image) }}" class="card-img-top" alt="{{ product.Nom }}" style="height: 500px; object-fit: cover;">
                 {% else %}
-                    <div style="height: 500px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center;">
-                        <span style="font-size: 10rem;">🍹</span>
+                    <div style="height: 500px; background: linear-gradient(135deg, #2d2a44, #5c8d89); display: flex; align-items: center; justify-content: center; color: #fff;">
+                        <span style="font-size: 6rem;"><i class="bi bi-journal-bookmark"></i></span>
                     </div>
                 {% endif %}
             </div>

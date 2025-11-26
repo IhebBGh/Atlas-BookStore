@@ -1,351 +1,160 @@
-{% extends 'base.html.twig' %}
+{% extends 'Admin/layout.html.twig' %}
 
-{% block title %}Admin Dashboard - JuiceStore{% endblock %}
+{% block title %}Admin Dashboard - Atlas Bookshop{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        .admin-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-            padding: 2rem 0;
-        }
-        
-        .admin-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-        
-        .admin-header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-        
-        .admin-header p {
-            margin: 0.5rem 0 0 0;
-            opacity: 0.9;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        
-        .stat-card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-card-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 0.5rem 0;
-        }
-        
-        .stat-card-label {
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .admin-nav {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        
-        .admin-nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        
-        .admin-nav-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .admin-nav-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-            color: white;
-        }
-        
-        .admin-nav-card-icon {
-            font-size: 2rem;
-        }
-
-        .admin-nav-card-content h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        .admin-nav-card-content p {
-            margin: 0.25rem 0 0 0;
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-        
-        .recent-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .recent-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        
-        .recent-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        
-        .recent-item {
-            padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: background 0.3s;
-        }
-        
-        .recent-item:hover {
-            background: #f8f9fa;
-        }
-        
-        .recent-item:last-child {
-            border-bottom: none;
-        }
-        
-        .recent-item-icon {
-            font-size: 1.5rem;
-        }
-        
-        .recent-item-content {
-            flex: 1;
-        }
-        
-        .recent-item-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.25rem;
-        }
-        
-        .recent-item-meta {
-            font-size: 0.85rem;
-            color: #666;
-        }
-        
-        .badge-role {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .badge-admin {
-            background: #ff6b35;
-            color: white;
-        }
-        
-        .badge-user {
-            background: #6fbf73;
-            color: white;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: #999;
-        }
-        
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-    </style>
 {% endblock %}
 
-{% block body %}
-<div class="admin-container">
-    <div class="container">
-        {# Admin Header #}
-        <div class="admin-header">
-            <h1><i class="bi bi-speedometer2"></i> Admin Dashboard</h1>
-            <p>Welcome back, {{ app.user.email }}! Manage your store efficiently.</p>
+{% block admin_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="m-0"><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+            <div class="text-muted small">Welcome back, {{ app.user.email }}! Here's your store overview.</div>
         </div>
+        <div>
+            <a href="{{ path('admin_product_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Product</a>
+        </div>
+    </div>
 
-        {# Flash Messages #}
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label == 'error' ? 'danger' : label }} alert-dismissible fade show" role="alert">
-                    <i class="bi bi-{% if label == 'success' %}check-circle{% elseif label == 'error' %}x-circle{% elseif label == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
+    {# Flash Messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }} alert-dismissible fade show" role="alert">
+                <i class="bi bi-{% if label == 'success' %}check-circle{% elseif label == 'error' %}x-circle{% elseif label == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         {% endfor %}
+    {% endfor %}
 
-        {# Statistics Cards #}
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-card-icon">🍹</div>
-                <div class="stat-card-value">{{ totalProducts }}</div>
-                <div class="stat-card-label">Total Products</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">👥</div>
-                <div class="stat-card-value">{{ totalUsers }}</div>
-                <div class="stat-card-label">Total Users</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">👑</div>
-                <div class="stat-card-value">{{ adminUsers }}</div>
-                <div class="stat-card-label">Admin Users</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-icon">👤</div>
-                <div class="stat-card-value">{{ regularUsers }}</div>
-                <div class="stat-card-label">Regular Users</div>
-            </div>
+    {# Key Metrics Cards #}
+    <div class="admin-widgets">
+        <div class="admin-card">
+            <small class="text-muted"><i class="bi bi-box-seam"></i> Total Products</small>
+            <div class="h3 mt-2">{{ totalProducts }}</div>
+            <a href="{{ path('admin_product_index') }}" class="btn btn-sm btn-link p-0 mt-2">View all →</a>
         </div>
 
-        {# Quick Navigation #}
-        <div class="admin-nav">
-            <div class="admin-nav-grid">
-                <a href="{{ path('admin_product_index') }}" class="admin-nav-card">
-                    <div class="admin-nav-card-icon">📦</div>
-                    <div class="admin-nav-card-content">
-                        <h3>Products</h3>
-                        <p>Manage all products</p>
-                    </div>
-                </a>
-                <a href="{{ path('admin_product_new') }}" class="admin-nav-card">
-                    <div class="admin-nav-card-icon">➕</div>
-                    <div class="admin-nav-card-content">
-                        <h3>Add Product</h3>
-                        <p>Create new product</p>
-                    </div>
-                </a>
-                <a href="{{ path('admin_user_index') }}" class="admin-nav-card">
-                    <div class="admin-nav-card-icon">👥</div>
-                    <div class="admin-nav-card-content">
-                        <h3>Users</h3>
-                        <p>Manage all users</p>
-                    </div>
-                </a>
-                <a href="{{ path('admin_user_new') }}" class="admin-nav-card">
-                    <div class="admin-nav-card-icon">➕</div>
-                    <div class="admin-nav-card-content">
-                        <h3>Add User</h3>
-                        <p>Create new user</p>
-                    </div>
-                </a>
-            </div>
+        <div class="admin-card">
+            <small class="text-muted"><i class="bi bi-people"></i> Total Users</small>
+            <div class="h3 mt-2">{{ totalUsers }}</div>
+            <div class="small text-muted">{{ adminUsers }} admins, {{ regularUsers }} users</div>
         </div>
 
-        {# Recent Activity #}
-        <div class="recent-section">
-            {# Recent Products #}
-            <div class="recent-card">
-                <h3><i class="bi bi-box-seam"></i> Recent Products</h3>
-                {% if recentProducts is empty %}
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📦</div>
-                        <p>No products yet</p>
-                        <a href="{{ path('admin_product_new') }}" class="btn btn-primary btn-sm mt-2">Add First Product</a>
-                    </div>
-                {% else %}
-                    {% for product in recentProducts %}
-                        <div class="recent-item">
-                            <div class="recent-item-icon">🍹</div>
-                            <div class="recent-item-content">
-                                <div class="recent-item-title">{{ product.Nom }}</div>
-                                <div class="recent-item-meta">{{ product.price }} TND • ID: {{ product.id }}</div>
-                            </div>
-                            <a href="{{ path('admin_product_show', {id: product.id}) }}" class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                        </div>
-                    {% endfor %}
-                    <div class="text-center mt-3">
-                        <a href="{{ path('admin_product_index') }}" class="btn btn-outline-primary">View All Products</a>
-                    </div>
-                {% endif %}
-            </div>
+        <div class="admin-card">
+            <small class="text-muted"><i class="bi bi-bag-check"></i> Total Orders</small>
+            <div class="h3 mt-2">{{ totalOrders }}</div>
+            <a href="{{ path('admin_order_index') }}" class="btn btn-sm btn-link p-0 mt-2">View all →</a>
+        </div>
 
-            {# Recent Users #}
-            <div class="recent-card">
-                <h3><i class="bi bi-people"></i> Recent Users</h3>
-                {% if recentUsers is empty %}
-                    <div class="empty-state">
-                        <div class="empty-state-icon">👤</div>
-                        <p>No users yet</p>
+        <div class="admin-card">
+            <small class="text-muted"><i class="bi bi-chat-left-text"></i> Messages</small>
+            <div class="h3 mt-2">{{ totalMessages }}</div>
+            <div class="small text-muted">{{ unreadMessages }} unread</div>
+        </div>
+    </div>
+
+    {# Main Content Grid #}
+    <div class="row g-3">
+        {# Recent Orders #}
+        <div class="col-lg-6">
+            <div class="admin-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="m-0"><i class="bi bi-bag-check"></i> Recent Orders</h5>
+                    <a href="{{ path('admin_order_index') }}" class="btn btn-sm btn-link">View all</a>
+                </div>
+                {% if recentOrders is empty %}
+                    <div class="text-center text-muted py-4">
+                        <div class="fs-5 mb-2">📦</div>
+                        <p>No orders yet</p>
                     </div>
                 {% else %}
-                    {% for user in recentUsers %}
-                        <div class="recent-item">
-                            <div class="recent-item-icon">👤</div>
-                            <div class="recent-item-content">
-                                <div class="recent-item-title">{{ user.email }}</div>
-                                <div class="recent-item-meta">
-                                    ID: {{ user.id }}
-                                    {% if 'ROLE_ADMIN' in user.roles %}
-                                        <span class="badge badge-role badge-admin ms-2">Admin</span>
-                                    {% else %}
-                                        <span class="badge badge-role badge-user ms-2">User</span>
-                                    {% endif %}
+                    <div class="list-group list-group-flush">
+                        {% for order in recentOrders[:5] %}
+                            <a href="{{ path('admin_order_show', {id: order.id}) }}" class="list-group-item list-group-item-action p-3 border-0 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold">Order #{{ order.id }}</div>
+                                    <div class="small text-muted">{{ order.createdAt ? order.createdAt|date('M d, Y H:i') : 'N/A' }}</div>
                                 </div>
-                            </div>
-                            <a href="{{ path('admin_user_show', {id: user.id}) }}" class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-eye"></i>
+                                <div class="text-end">
+                                    <div class="fw-bold">{{ order.totalPrice|default(0) }} TND</div>
+                                    <span class="badge bg-info small">{{ order.status|default('pending') }}</span>
+                                </div>
                             </a>
-                        </div>
-                    {% endfor %}
-                    <div class="text-center mt-3">
-                        <a href="{{ path('admin_user_index') }}" class="btn btn-outline-primary">View All Users</a>
+                        {% endfor %}
                     </div>
                 {% endif %}
+            </div>
+        </div>
+
+        {# Recent Messages #}
+        <div class="col-lg-6">
+            <div class="admin-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="m-0"><i class="bi bi-chat-left-text"></i> Recent Messages</h5>
+                    <a href="{{ path('admin_message_index') }}" class="btn btn-sm btn-link">View all</a>
+                </div>
+                {% if recentMessages is empty %}
+                    <div class="text-center text-muted py-4">
+                        <div class="fs-5 mb-2">💬</div>
+                        <p>No messages</p>
+                    </div>
+                {% else %}
+                    <div class="list-group list-group-flush">
+                        {% for message in recentMessages[:5] %}
+                            <a href="{{ path('admin_message_show', {id: message.id}) }}" class="list-group-item list-group-item-action p-3 border-0 d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">{{ message.name }}</div>
+                                    <div class="small text-muted">{{ message.subject|slice(0, 40) }}...</div>
+                                    <div class="small">{{ message.createdAt ? message.createdAt|date('M d, Y') : 'N/A' }}</div>
+                                </div>
+                                {% if not message.isRead %}
+                                    <span class="badge bg-warning ms-2">Unread</span>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {# Bottom Stats Row #}
+    <div class="row g-3 mt-2">
+        <div class="col-md-6">
+            <div class="admin-card">
+                <h6 class="mb-3"><i class="bi bi-graph-up"></i> User Distribution</h6>
+                <div class="d-flex gap-4">
+                    <div>
+                        <div class="small text-muted">Admin Users</div>
+                        <div class="h5 text-primary mb-0">{{ adminUsers }}</div>
+                    </div>
+                    <div>
+                        <div class="small text-muted">Regular Users</div>
+                        <div class="h5 mb-0">{{ regularUsers }}</div>
+                    </div>
+                    <div class="ms-auto text-end">
+                        <div class="small text-muted">Total</div>
+                        <div class="h5 mb-0">{{ totalUsers }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="admin-card">
+                <h6 class="mb-3"><i class="bi bi-archive"></i> Inventory</h6>
+                <div class="d-flex gap-4">
+                    <div>
+                        <div class="small text-muted">Products</div>
+                        <div class="h5 text-success mb-0">{{ totalProducts }}</div>
+                    </div>
+                    <div class="ms-auto text-end">
+                        <a href="{{ path('admin_product_new') }}" class="btn btn-sm btn-outline-primary">Add New</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

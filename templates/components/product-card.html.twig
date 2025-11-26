@@ -1,14 +1,14 @@
 {# templates/components/product-card.html.twig #}
 {# Usage: {% include 'components/product-card.html.twig' with {'product': product} %} #}
 
-<div class="card product-card h-100 shadow-sm">
+<div class="card product-card h-100 shadow-sm border-0">
     
     {# Product Image #}
     {% if product.image %}
         <img src="{{ asset('uploads/products/' ~ product.image) }}" class="card-img-top" alt="{{ product.Nom }}">
     {% else %}
-        <div style="height: 250px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center;">
-            <span style="font-size: 5rem;">🥤</span>
+        <div style="height: 250px; background: linear-gradient(135deg, #2d2a44, #5c8d89); display: flex; align-items: center; justify-content: center; color: #f3efe7;">
+            <span style="font-size: 4rem;"><i class="bi bi-journal-bookmark"></i></span>
         </div>
     {% endif %}
     
@@ -27,18 +27,21 @@
         
         {# Price #}
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="h5 mb-0 text-primary">{{ product.price }} TND</span>
+            <span class="h5 mb-0 text-ink">{{ product.price }} TND</span>
+            {% if product.category %}
+                <span class="badge-genre">{{ product.category.name }}</span>
+            {% endif %}
         </div>
         
         {# Action Buttons #}
         <div class="d-flex gap-2 mt-auto">
             <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-outline-primary flex-grow-1">
-                <i class="bi bi-eye"></i> View
+                <i class="bi bi-book"></i> Details
             </a>
             <form method="post" action="{{ path('app_add_to_cart', {id: product.id}) }}" class="flex-grow-1">
                 <input type="hidden" name="quantity" value="1">
                 <button type="submit" class="btn btn-primary w-100" title="Add to Cart" {% if not product.isInStock() %}disabled{% endif %}>
-                    <i class="bi bi-cart-plus"></i> Add
+                    <i class="bi bi-bag-plus"></i> Add
                 </button>
             </form>
         </div>

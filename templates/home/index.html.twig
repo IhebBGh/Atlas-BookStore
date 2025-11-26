@@ -1,36 +1,110 @@
 {# templates/home/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Home - Fresh Juices & Smoothies{% endblock %}
+{% block title %}Atlas Bookshop{% endblock %}
 
 {% block body %}
 {# Hero Section #}
-<div class="hero-section">
-    <div style="font-size: 4rem; margin-bottom: 1rem;">🍹</div>
-    <h1 class="display-4 fw-bold">Fresh Juices & Smoothies</h1>
-    <p class="lead">Healthy, Delicious, and Made Fresh Daily!</p>
-    <a href="#products" class="btn btn-light btn-lg mt-3">
-        <i class="bi bi-arrow-down-circle"></i> Explore Products
-    </a>
+<div class="hero-section mb-5 overflow-hidden">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <p class="text-uppercase text-muted mb-2" style="letter-spacing: 0.3em;">Independent Bookstore</p>
+            <h1 class="display-4 fw-bold">Find your next story, curated by real readers.</h1>
+            <p class="lead mb-4">
+                From buzzy new releases to collectible hardcovers and comforting classics, Atlas Bookshop keeps every shelf handpicked.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="#catalog" class="btn btn-light btn-lg">
+                    <i class="bi bi-arrow-down-circle"></i> Browse the catalog
+                </a>
+                <a href="{{ path('app_search') }}" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-search"></i> Search by title
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class="floating-card bg-white text-dark p-4">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-uppercase text-muted small mb-1">Readers served</p>
+                        <h2 class="brand-serif mb-0">3,200+</h2>
+                    </div>
+                    <div>
+                        <p class="text-uppercase text-muted small mb-1">Staff picks</p>
+                        <h2 class="brand-serif mb-0">48</h2>
+                    </div>
+                </div>
+                <hr>
+                <p class="mb-0 text-muted">
+                    “A luminous sanctuary for book lovers.” — <strong>The City Review</strong>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 
-{# Products Section #}
-<div id="products" class="mb-4"></div>
+{# Featured Sections #}
+<section class="mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="floating-card p-4 h-100 bg-white">
+                <p class="text-uppercase text-muted small mb-2">New arrivals</p>
+                <h3 class="h4 brand-serif">Signed first editions</h3>
+                <p class="text-muted mb-0">Limited runs from breakout authors across fiction, memoir, and poetry.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="floating-card p-4 h-100 bg-white">
+                <p class="text-uppercase text-muted small mb-2">Weekend stack</p>
+                <h3 class="h4 brand-serif">Cozy mysteries & romance</h3>
+                <p class="text-muted mb-0">Curl up with atmospheric stories, candlelight, and a blanket.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="floating-card p-4 h-100 bg-white">
+                <p class="text-uppercase text-muted small mb-2">For curious minds</p>
+                <h3 class="h4 brand-serif">Ideas worth annotating</h3>
+                <p class="text-muted mb-0">Non-fiction, essays, and design-forward coffee-table tomes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# Curated Picks #}
+{% if products is not empty %}
+    {% set featuredBooks = products|slice(0, 4) %}
+    <section class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="section-heading mb-0"><i class="bi bi-stars"></i> Staff Picks</h2>
+                <span class="text-muted">Hand-picked favorites updated weekly</span>
+            </div>
+            <a href="#catalog" class="btn btn-outline-primary btn-sm">View all</a>
+        </div>
+        <div class="row g-4">
+            {% for product in featuredBooks %}
+                <div class="col-md-6 col-lg-3">
+                    {% include 'components/product-card.html.twig' with {'product': product} %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
 
 {# All Products Section #}
-<section>
+<section id="catalog">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">
-            <i class="bi bi-cup-straw"></i> All Products
+        <h2 class="section-heading mb-0">
+            <i class="bi bi-journals"></i> All Books
         </h2>
-        <span class="badge bg-primary">{{ products|length }} products found</span>
+        <span class="badge bg-dark text-uppercase">{{ products|length }} titles</span>
     </div>
     
     {% if products is empty %}
         <div class="alert alert-info text-center py-5">
             <i class="bi bi-info-circle display-1"></i>
-            <h4 class="mt-3">No products available yet</h4>
-            <p>Products will appear once the backend is configured.</p>
+            <h4 class="mt-3">Shelves in progress</h4>
+            <p>Books will appear as soon as the catalog is populated.</p>
         </div>
     {% else %}
         <div class="row g-4">
@@ -47,24 +121,17 @@
 
 {% block javascripts %}
 <script>
-    // Smooth scroll to products section
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') {
+                return;
+            }
+            const target = document.querySelector(targetId);
             if (target) {
+                e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth' });
             }
-        });
-    });
-    
-    // Add hover effect to category cards
-    document.querySelectorAll('.hover-effect').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
         });
     });
 </script>

@@ -1,388 +1,225 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}About Us - Juice & Smoothie Store{% endblock %}
+{% block title %}Our Story - Atlas Bookshop{% endblock %}
 
 {% block body %}
 <style>
     .about-hero {
-        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        background: radial-gradient(circle at top, rgba(214,138,26,0.45), rgba(45,42,68,0.95));
         color: white;
-        padding: 80px 0 60px;
+        padding: 90px 30px;
+        border-radius: 30px;
         text-align: center;
-        border-radius: 20px;
-        margin: 30px auto;
-        max-width: 95%;
+        position: relative;
+        overflow: hidden;
     }
-    
+    .about-hero::after {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 24px;
+    }
     .about-hero h1 {
-        font-size: 48px;
-        font-weight: 700;
-        margin-bottom: 20px;
+        font-size: 3.5rem;
+        font-family: 'Playfair Display', serif;
     }
-    
-    .about-hero p {
-        font-size: 20px;
-        max-width: 700px;
-        margin: 0 auto;
-        opacity: 0.95;
+    .story-card,
+    .value-card,
+    .team-card {
+        border-radius: 24px;
+        border: 1px solid rgba(31,27,46,0.08);
+        box-shadow: 0 20px 40px rgba(31,27,46,0.08);
+        background: #fff;
+        padding: 2.5rem;
+        height: 100%;
     }
-    
-    .about-section {
-        padding: 60px 0;
-    }
-    
-    .section-title {
-        text-align: center;
-        font-size: 36px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 15px;
-    }
-    
-    .section-subtitle {
-        text-align: center;
-        color: #666;
-        font-size: 18px;
-        margin-bottom: 50px;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .story-card {
-        background: white;
-        border-radius: 20px;
-        padding: 40px;
-        box-shadow: 0 4px 20px rgba(255, 138, 91, 0.1);
-        margin-bottom: 30px;
-        border: 1px solid #f0f0f0;
-    }
-    
-    .story-card h3 {
-        color: #FF8A5B;
-        font-weight: 700;
-        margin-bottom: 20px;
-        font-size: 24px;
-    }
-    
-    .story-card p {
-        color: #555;
-        line-height: 1.8;
-        font-size: 16px;
-    }
-    
-    .values-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
-    }
-    
     .value-card {
         text-align: center;
-        padding: 30px;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s;
-        border: 1px solid #f0f0f0;
     }
-    
-    .value-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 30px rgba(255, 138, 91, 0.25);
-        border-color: #FF8A5B;
-    }
-    
     .value-icon {
-        font-size: 60px;
-        margin-bottom: 20px;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent);
     }
-    
-    .value-card h4 {
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 15px;
-    }
-    
-    .value-card p {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.6;
-    }
-    
     .stats-section {
-        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        background: linear-gradient(135deg, #2d2a44, #5c8d89);
+        border-radius: 24px;
+        padding: 3rem;
         color: white;
-        padding: 60px 0;
-        margin: 60px auto;
-        border-radius: 20px;
-        max-width: 95%;
+        box-shadow: 0 35px 60px rgba(31, 27, 46, 0.3);
     }
-    
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 40px;
-        text-align: center;
-    }
-    
     .stat-item h3 {
-        font-size: 48px;
-        font-weight: 700;
-        margin-bottom: 10px;
+        font-size: 3rem;
+        font-family: 'Playfair Display', serif;
     }
-    
-    .stat-item p {
-        font-size: 18px;
-        opacity: 0.95;
-    }
-    
-    .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
-    }
-    
-    .team-card {
-        background: white;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s;
-        border: 1px solid #f0f0f0;
-    }
-    
-    .team-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(255, 138, 91, 0.25);
-        border-color: #FF8A5B;
-    }
-    
     .team-avatar {
-        width: 100%;
-        height: 250px;
-        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f3c892, #f7e7d4);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 80px;
+        font-size: 2.5rem;
+        margin: 0 auto 1rem;
     }
-    
-    .team-info {
-        padding: 25px;
-        text-align: center;
-    }
-    
-    .team-info h4 {
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 5px;
-    }
-    
-    .team-info .role {
-        color: #FF8A5B;
-        font-weight: 600;
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-    
-    .team-info p {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.6;
-    }
-    
     .cta-section {
-        background: #f8f9fa;
-        padding: 60px 0;
+        background: #fff;
+        border-radius: 24px;
+        padding: 3rem;
         text-align: center;
-        border-radius: 20px;
-        margin: 30px auto;
-        max-width: 95%;
-    }
-    
-    .cta-section h2 {
-        font-size: 36px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 20px;
-    }
-    
-    .cta-section p {
-        color: #666;
-        font-size: 18px;
-        margin-bottom: 30px;
-    }
-    
-    .btn-cta {
-        display: inline-block;
-        padding: 15px 40px;
-        background: linear-gradient(135deg, #FF8A5B 0%, #FF6B45 100%);
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 16px;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(255, 138, 91, 0.4);
-        border: none;
-    }
-    
-    .btn-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 25px rgba(255, 138, 91, 0.6);
-        color: white;
-        background: linear-gradient(135deg, #FF9A6B 0%, #FF7B55 100%);
-    }
-    
-    body {
-        background-color: #f5f5f5;
+        box-shadow: 0 25px 45px rgba(31, 27, 46, 0.1);
     }
 </style>
 
-<!-- Hero Section -->
-<div class="about-hero">
-    <div class="container">
-        <h1>About Us</h1>
-        <p>Discover the story of Juice & Smoothie Store, your destination for natural and delicious beverages</p>
+<section class="about-hero mb-5">
+    <div class="position-relative" style="z-index: 2;">
+        <p class="text-uppercase text-light mb-3" style="letter-spacing: 0.4em;">Atlas Bookshop</p>
+        <h1 class="fw-bold mb-3">A sanctuary for slow reading and beautifully made books.</h1>
+        <p class="lead mx-auto" style="max-width: 700px;">
+            What started as a weekend pop-up with a single wooden shelf has become a full-spectrum bookstore that celebrates independent presses, inclusive voices, and tactile design.
+        </p>
     </div>
-</div>
+</section>
 
-<!-- Our Story -->
-<div class="about-section">
-    <div class="container">
-        <h2 class="section-title">Our Story</h2>
-        <p class="section-subtitle">A passion for healthy and delicious beverages</p>
-        
-        <div class="story-card">
-            <h3>🌱 How It All Started</h3>
-            <p>
-                Juice & Smoothie Store was born from a passion for healthy living and authentic flavors. 
-                Founded in 2020, our company has made it our mission to make natural beverages 
-                accessible to everyone. We believe that health comes through quality nutrition, and our 
-                juices, smoothies, and detox cocktails are prepared with 100% natural ingredients, 
-                without preservatives or additives.
-            </p>
+<section class="mb-5">
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="story-card h-100">
+                <p class="text-uppercase text-muted small">Chapter One</p>
+                <h2 class="brand-serif">Origins in a hidden courtyard</h2>
+                <p class="text-muted">
+                    Atlas Bookshop opened in 2017 inside a shared artist loft. With only 200 titles and a hand-painted sign, we welcomed neighbors with late-night readings and coffee brewed on a camp stove.
+                </p>
+                <p class="text-muted">
+                    Word-of-mouth spread, and our intimate gatherings transformed into a thriving community hub for poets, game designers, chefs, tech founders, and families discovering the joy of picture books.
+                </p>
+            </div>
         </div>
-        
-        <div class="story-card">
-            <h3>🎯 Our Mission</h3>
-            <p>
-                Our mission is simple: to offer our customers delicious and nutritious beverages that 
-                contribute to their daily well-being. Each recipe is carefully crafted to 
-                maximize the benefits of fruits and vegetables while ensuring exceptional taste. 
-                We work with local producers to guarantee the freshness and quality of 
-                our ingredients.
-            </p>
+        <div class="col-lg-6">
+            <div class="story-card h-100">
+                <p class="text-uppercase text-muted small">Chapter Two</p>
+                <h2 class="brand-serif">Why we still do everything by hand</h2>
+                <p class="text-muted">
+                    Every title is reviewed by a bookseller before it hits our shelves. We annotate, pair books with playlists, bundle surprise boxes, and commission local illustrators for in-store posters.
+                </p>
+                <p class="text-muted">
+                    Our promise is simple: keep the experience tactile, thoughtful, and rooted in human connection—even when you shop online.
+                </p>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Statistics -->
-<div class="stats-section">
-    <div class="container">
-        <div class="stats-grid">
+<section class="stats-section mb-5">
+    <div class="row text-center g-4">
+        <div class="col-md-3">
             <div class="stat-item">
-                <h3>1000+</h3>
-                <p>Satisfied Customers</p>
+                <h3>12K</h3>
+                <p class="text-uppercase small text-white-50 mb-0">Books placed in new homes</p>
             </div>
+        </div>
+        <div class="col-md-3">
             <div class="stat-item">
-                <h3>50+</h3>
-                <p>Unique Recipes</p>
+                <h3>86</h3>
+                <p class="text-uppercase small text-white-50 mb-0">Independent presses championed</p>
             </div>
+        </div>
+        <div class="col-md-3">
             <div class="stat-item">
-                <h3>100%</h3>
-                <p>Natural</p>
+                <h3>4.9★</h3>
+                <p class="text-uppercase small text-white-50 mb-0">Reader satisfaction</p>
             </div>
+        </div>
+        <div class="col-md-3">
             <div class="stat-item">
-                <h3>4.8★</h3>
-                <p>Average Rating</p>
+                <h3>37</h3>
+                <p class="text-uppercase small text-white-50 mb-0">Monthly gatherings</p>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Our Values -->
-<div class="about-section">
-    <div class="container">
-        <h2 class="section-title">Our Values</h2>
-        <p class="section-subtitle">What guides us every day</p>
-        
-        <div class="values-grid">
+<section class="mb-5">
+    <div class="text-center mb-4">
+        <p class="text-uppercase text-muted small">Guiding Lights</p>
+        <h2 class="brand-serif">Our bookseller vows</h2>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-3">
             <div class="value-card">
-                <div class="value-icon">🌿</div>
-                <h4>100% Natural</h4>
-                <p>We use only natural ingredients, without preservatives or artificial additives.</p>
+                <div class="value-icon"><i class="bi bi-journal-bookmark"></i></div>
+                <h4 class="brand-serif h5">Curate with intent</h4>
+                <p class="text-muted">No algorithm dumps. Every selection is debated by the team weekly.</p>
             </div>
-            
+        </div>
+        <div class="col-md-3">
             <div class="value-card">
-                <div class="value-icon">🥇</div>
-                <h4>Premium Quality</h4>
-                <p>Our fruits and vegetables are carefully selected from trusted local producers.</p>
+                <div class="value-icon"><i class="bi bi-people"></i></div>
+                <h4 class="brand-serif h5">Champion representation</h4>
+                <p class="text-muted">We highlight marginalized voices and translate global storytelling.</p>
             </div>
-            
+        </div>
+        <div class="col-md-3">
             <div class="value-card">
-                <div class="value-icon">💚</div>
-                <h4>Health & Wellness</h4>
-                <p>Each beverage is designed to provide essential nutrients to your body.</p>
+                <div class="value-icon"><i class="bi bi-box-seam"></i></div>
+                <h4 class="brand-serif h5">Package sustainably</h4>
+                <p class="text-muted">Plastic-free wraps, soy inks, and recyclable tissue for every shipment.</p>
             </div>
-            
+        </div>
+        <div class="col-md-3">
             <div class="value-card">
-                <div class="value-icon">♻️</div>
-                <h4>Eco-Friendly</h4>
-                <p>We are committed to the environment with recyclable and sustainable packaging.</p>
+                <div class="value-icon"><i class="bi bi-chat-heart"></i></div>
+                <h4 class="brand-serif h5">Stories over sales</h4>
+                <p class="text-muted">We recommend what fits your mood, not what sits in our stockroom.</p>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Our Team -->
-<div class="about-section" style="background: transparent;">
-    <div class="container">
-        <h2 class="section-title">Our Team</h2>
-        <p class="section-subtitle">The passionate people behind your favorite beverages</p>
-        
-        <div class="team-grid">
-            <div class="team-card">
-                <div class="team-avatar">👨‍🍳</div>
-                <div class="team-info">
-                    <h4>Alexandre Martin</h4>
-                    <p class="role">Founder & Chef</p>
-                    <p>Passionate about nutrition and gastronomy, Alexandre creates innovative and delicious recipes.</p>
-                </div>
+<section class="mb-5">
+    <div class="text-center mb-4">
+        <p class="text-uppercase text-muted small">Booksellers</p>
+        <h2 class="brand-serif">Meet the team</h2>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="team-card h-100 text-center">
+                <div class="team-avatar">📚</div>
+                <h4 class="brand-serif">Maya Keller</h4>
+                <p class="text-muted mb-1 text-uppercase small">Founder & Head Curator</p>
+                <p class="text-muted small">Specializes in speculative fiction and feminist nonfiction.</p>
             </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">👩‍💼</div>
-                <div class="team-info">
-                    <h4>Sophie Dubois</h4>
-                    <p class="role">Nutritionist</p>
-                    <p>Nutrition expert, Sophie ensures that each beverage provides the best benefits.</p>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="team-card h-100 text-center">
+                <div class="team-avatar">🎧</div>
+                <h4 class="brand-serif">Theo Marin</h4>
+                <p class="text-muted mb-1 text-uppercase small">Events & Community</p>
+                <p class="text-muted small">Hosts our vinyl-listening book club and illustrator residencies.</p>
             </div>
-            
-            <div class="team-card">
-                <div class="team-avatar">👨‍🌾</div>
-                <div class="team-info">
-                    <h4>Pierre Lefebvre</h4>
-                    <p class="role">Quality Manager</p>
-                    <p>Pierre oversees the selection of the best ingredients from our partner producers.</p>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="team-card h-100 text-center">
+                <div class="team-avatar">🌿</div>
+                <h4 class="brand-serif">Lina Ocampo</h4>
+                <p class="text-muted mb-1 text-uppercase small">Children’s Lead</p>
+                <p class="text-muted small">Curates sensory story hours and bilingual picture books.</p>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<!-- Call to Action -->
-<div class="cta-section">
-    <div class="container">
-        <h2>Ready to discover our beverages?</h2>
-        <p>Explore our catalog and find your favorite drink</p>
-        <a href="{{ path('app_home') }}" class="btn-cta">Discover Our Products</a>
-    </div>
-</div>
-
+<section class="cta-section mb-5">
+    <p class="text-uppercase text-muted small">Join the club</p>
+    <h2 class="brand-serif mb-3">Become part of our reader circle</h2>
+    <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">
+        Early access to limited editions, annotated reading guides, private shopping hours, and quarterly literary care packages.
+    </p>
+    <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg">
+        <i class="bi bi-envelope-heart"></i> Browse the latest drops
+    </a>
+</section>
 
 {% endblock %}

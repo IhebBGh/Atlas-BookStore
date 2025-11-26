@@ -1,22 +1,22 @@
 {# templates/cart/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Shopping Cart{% endblock %}
+{% block title %}My Reading List{% endblock %}
 
 {% block body %}
-<h1 class="mb-4"><i class="bi bi-cart"></i> Shopping Cart</h1>
+<h1 class="mb-4 brand-serif"><i class="bi bi-journals"></i> Reading List</h1>
 
 {# Note: This template requires CartController and CartService from your backend teammate #}
 
 {% if cartItems is empty %}
 {# Empty Cart State #}
-<div class="card shadow-sm text-center py-5">
+<div class="card shadow-sm text-center py-5 floating-card">
     <div class="card-body">
-        <i class="bi bi-cart-x display-1 text-muted"></i>
-        <h3 class="mt-4">Your cart is empty</h3>
-        <p class="text-muted">Add some delicious juices to get started!</p>
+        <i class="bi bi-emoji-sunglasses display-1 text-muted"></i>
+        <h3 class="mt-4">Your shelf is empty</h3>
+        <p class="text-muted">Add a few promising titles to get started.</p>
         <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg mt-3">
-            <i class="bi bi-shop"></i> Continue Shopping
+            <i class="bi bi-compass"></i> Continue browsing
         </a>
     </div>
 </div>
@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-8">
         {% for item in cartItems %}
-            <div class="card mb-3 shadow-sm">
+            <div class="card mb-3 shadow-sm border-0 floating-card">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-2">
@@ -34,8 +34,8 @@
                                      class="img-fluid rounded" 
                                      alt="{{ item.product.Nom }}">
                             {% else %}
-                                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                                    <span style="font-size: 3rem;">🥤</span>
+                                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #2d2a44, #5c8d89); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff;">
+                                    <span style="font-size: 2rem;"><i class="bi bi-journal"></i></span>
                                 </div>
                             {% endif %}
                         </div>
@@ -67,12 +67,12 @@
                         </div>
                         
                         <div class="col-md-2">
-                            <h5 class="text-primary mb-0">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</h5>
+                            <h5 class="text-ink mb-0">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</h5>
                         </div>
                         
                         <div class="col-md-1 text-end">
                             <a href="{{ path('app_remove_from_cart', {id: item.product.id}) }}" 
-                               class="btn btn-danger btn-sm"
+                               class="btn btn-outline-danger btn-sm"
                                onclick="return confirm('Remove this item from cart?')">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -95,34 +95,34 @@
     </div>
     
     <div class="col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0"><i class="bi bi-cart-check"></i> Cart Summary</h5>
+        <div class="card shadow-sm border-0 floating-card">
+            <div class="card-header bg-white border-0">
+                <h5 class="mb-0"><i class="bi bi-bookmark-check"></i> Order Summary</h5>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                     <h5 class="mb-0">Total:</h5>
-                    <h4 class="mb-0 text-primary">{{ total|number_format(2, ',', ' ') }} TND</h4>
+                    <h4 class="mb-0 text-ink">{{ total|number_format(2, ',', ' ') }} TND</h4>
                 </div>
             </div>
         </div>
         
         <div class="d-grid gap-2 mt-3">
-            <a href="{{ path('app_checkout') }}" class="btn btn-success btn-lg">
+            <a href="{{ path('app_checkout') }}" class="btn btn-primary btn-lg">
                 <i class="bi bi-credit-card"></i> Proceed to Checkout
             </a>
             <a href="{{ path('app_home') }}" class="btn btn-outline-primary">
-                <i class="bi bi-arrow-left"></i> Continue Shopping
+                <i class="bi bi-arrow-left"></i> Continue browsing
             </a>
         </div>
         
-        <div class="card mt-3 bg-light">
+        <div class="card mt-3 bg-light border-0">
             <div class="card-body">
-                <h6 class="card-title"><i class="bi bi-gift"></i> Special Offers</h6>
+                <h6 class="card-title"><i class="bi bi-gift"></i> Perks</h6>
                 <ul class="list-unstyled mb-0 small">
-                    <li><i class="bi bi-check-circle text-success"></i> Free shipping on orders over 50 TND</li>
-                    <li><i class="bi bi-check-circle text-success"></i> 10% off your first order</li>
-                    <li><i class="bi bi-check-circle text-success"></i> Fresh daily guarantee</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Free eco-friendly wrapping over 70 TND</li>
+                    <li><i class="bi bi-check-circle text-success"></i> 10% off your first reader box</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Same-day pickup for locals</li>
                 </ul>
             </div>
         </div>

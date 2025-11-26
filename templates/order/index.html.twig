@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My Orders - JuiceStore{% endblock %}
+{% block title %}My Orders - Atlas Bookshop{% endblock %}
 
 {% block body %}
 <div class="container my-4">
-    <h1><i class="bi bi-bag-check"></i> My Orders</h1>
+    <h1 class="brand-serif"><i class="bi bi-bag-check"></i> My Orders</h1>
 
     {% if orders is empty %}
         <div class="alert alert-info text-center py-5">
             <i class="bi bi-inbox display-1"></i>
             <h4 class="mt-3">No orders yet</h4>
-            <p>Start shopping to see your orders here.</p>
-            <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Browse Products</a>
+            <p>Your future reads will appear here once you check out.</p>
+            <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Browse Books</a>
         </div>
     {% else %}
         <div class="table-responsive">

@@ -1,26 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Order - Juice & Smoothie{% endblock %}
+{% block title %}Order Confirmed - Atlas Bookshop{% endblock %}
 
 {% block body %}
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow">
+            <div class="card shadow border-0 floating-card">
                 <div class="card-body text-center p-5">
                     <div class="mb-4">
-                        <i class="bi bi-check-circle-fill text-success" style="font-size: 80px;"></i>
+                        <i class="bi bi-bookmark-check-fill text-success" style="font-size: 80px;"></i>
                     </div>
-                    <h1 class="mb-3">Order Confirmed!</h1>
+                    <h1 class="mb-3 brand-serif">Your books are on the way</h1>
                     <p class="lead text-muted mb-4">
-                        Thank you for your order. Your total was <strong>{{ total|number_format(2, ',', ' ') }} TND</strong>.
+                        Thank you for shopping independent. Total paid: <strong>{{ total|number_format(2, ',', ' ') }} TND</strong>.
                     </p>
                     <p class="text-muted mb-4">
-                        In a real application, you would receive a confirmation email and order number here.
+                        You'll receive a confirmation email with pickup or delivery details shortly.
                     </p>
                     <div class="mt-4">
-                        <a href="{{ path('app_home') }}" class="btn btn-success btn-lg">
-                            <i class="bi bi-house"></i> Back to Home
+                        <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house"></i> Back to the shelves
                         </a>
                     </div>
                 </div>

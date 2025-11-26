@@ -1,46 +1,50 @@
 {# templates/components/navbar.html.twig #}
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="{{ path('app_home') }}">
-            <i class="bi bi-cup-straw"></i> JuiceStore
+        <a class="navbar-brand d-flex align-items-center gap-3" href="{{ path('app_home') }}">
+            <span class="fs-3 text-accent"><i class="bi bi-book-half"></i></span>
+            <span>
+                Atlas Bookshop
+                <small class="d-block text-muted" style="font-size: 0.75rem; letter-spacing: 0.08em;">Stories for curious minds</small>
+            </span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_home' or app.request.get('_route') == 'homepage' %}active{% endif %}" href="{{ path('app_home') }}">
-                        <i class="bi bi-house"></i> Home
+                        <i class="bi bi-house-door"></i> Shelves
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_about' %}active{% endif %}" href="{{ path('app_about') }}">
-                        <i class="bi bi-info-circle"></i> About
+                        <i class="bi bi-journal-richtext"></i> Our Story
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_contact' %}active{% endif %}" href="{{ path('app_contact') }}">
-                        <i class="bi bi-envelope"></i> Contact
+                        <i class="bi bi-envelope-paper-heart"></i> Contact
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.get('_route') == 'app_search' %}active{% endif %}" href="{{ path('app_search') }}">
-                        <i class="bi bi-search"></i> Search
+                        <i class="bi bi-compass"></i> Find Books
                     </a>
                 </li>
                 
                 {# Cart - Show for everyone #}
                 <li class="nav-item">
                     <a class="nav-link position-relative {% if app.request.get('_route') == 'app_cart' %}active{% endif %}" href="{{ path('app_cart') }}">
-                        <i class="bi bi-cart"></i> Cart
+                        <i class="bi bi-bag"></i> My Cart
                         {% if app.session and app.session.get('cart') %}
                             {% set cartCount = 0 %}
                             {% for quantity in app.session.get('cart') %}
                                 {% set cartCount = cartCount + quantity %}
                             {% endfor %}
                             {% if cartCount > 0 %}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                                     {{ cartCount }}
                                 </span>
                             {% endif %}
@@ -51,22 +55,22 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-speedometer2"></i> Admin
+                            <i class="bi bi-speedometer2"></i> Back Office
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                             <li><a class="dropdown-item" href="{{ path('admin_dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_product_index') }}"><i class="bi bi-box-seam"></i> Products</a></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_product_new') }}"><i class="bi bi-plus-circle"></i> Add Product</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_product_index') }}"><i class="bi bi-box-seam"></i> Titles</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_product_new') }}"><i class="bi bi-plus-circle"></i> Add Title</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ path('admin_order_index') }}"><i class="bi bi-bag-check"></i> Orders</a></li>
                             <li><a class="dropdown-item" href="{{ path('admin_message_index') }}"><i class="bi bi-envelope"></i> Messages</a></li>
                             <li><a class="dropdown-item" href="{{ path('admin_analytics') }}"><i class="bi bi-graph-up"></i> Analytics</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_category_index') }}"><i class="bi bi-tags"></i> Categories</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_category_index') }}"><i class="bi bi-tags"></i> Genres</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_user_index') }}"><i class="bi bi-people"></i> Users</a></li>
-                            <li><a class="dropdown-item" href="{{ path('admin_user_new') }}"><i class="bi bi-person-plus"></i> Add User</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_user_index') }}"><i class="bi bi-people"></i> Readers</a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_user_new') }}"><i class="bi bi-person-plus"></i> Add Team Member</a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -80,7 +84,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_profile') }}"><i class="bi bi-person"></i> My Profile</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_orders') }}"><i class="bi bi-bag-check"></i> My Orders</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_my_messages') }}"><i class="bi bi-envelope"></i> My Messages</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_wishlist') }}"><i class="bi bi-heart"></i> My Wishlist</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_wishlist') }}"><i class="bi bi-heart"></i> Wishlist</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                         </ul>
@@ -88,12 +92,12 @@
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'app_login' %}active{% endif %}" href="{{ path('app_login') }}">
-                            <i class="bi bi-box-arrow-in-right"></i> Login
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if app.request.get('_route') == 'app_register' %}active{% endif %}" href="{{ path('app_register') }}">
-                            <i class="bi bi-person-plus"></i> Register
+                            <i class="bi bi-person-plus"></i> Create Account
                         </a>
                     </li>
                 {% endif %}

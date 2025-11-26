@@ -1,17 +1,17 @@
 {# templates/components/cart-summary.html.twig #}
 {# Usage: {% include 'components/cart-summary.html.twig' with {'cart': cart, 'total': total} %} #}
 
-<div class="card shadow-sm">
-    <div class="card-header bg-primary text-white">
-        <h5 class="mb-0"><i class="bi bi-cart-check"></i> Cart Summary</h5>
+<div class="card shadow-sm border-0 floating-card">
+    <div class="card-header border-0" style="background: transparent;">
+        <h5 class="mb-0"><i class="bi bi-bookmark-check"></i> Reading List</h5>
     </div>
     <div class="card-body">
         {% if cart is empty %}
             <div class="text-center py-4">
-                <i class="bi bi-cart-x display-1 text-muted"></i>
-                <p class="text-muted mt-3">Your cart is empty</p>
+                <i class="bi bi-emoji-smile display-4 text-muted"></i>
+                <p class="text-muted mt-3">Your shelf is empty</p>
                 <a href="{{ path('app_home') }}" class="btn btn-primary btn-sm">
-                    <i class="bi bi-shop"></i> Start Shopping
+                    <i class="bi bi-compass"></i> Discover Books
                 </a>
             </div>
         {% else %}
@@ -26,7 +26,7 @@
                                     {{ item.product.price }} TND × {{ item.quantity }}
                                 </small>
                             </div>
-                            <strong class="text-primary">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</strong>
+                            <strong class="text-ink">{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} TND</strong>
                         </div>
                     </li>
                 {% endfor %}
@@ -35,14 +35,14 @@
             {# Total Section #}
             <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                 <h5 class="mb-0">Total:</h5>
-                <h4 class="mb-0 text-primary">{{ total|number_format(2, ',', ' ') }} TND</h4>
+                <h4 class="mb-0 text-ink">{{ total|number_format(2, ',', ' ') }} TND</h4>
             </div>
             
             {# Action Buttons (Optional - only show if not on cart page) #}
             {% if app.request.get('_route') != 'app_cart' %}
                 <div class="d-grid gap-2 mt-3">
                     <a href="{{ path('app_cart') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-cart"></i> View Cart
+                        <i class="bi bi-bag"></i> View Cart
                     </a>
                     <a href="{{ path('app_checkout') }}" class="btn btn-success">
                         <i class="bi bi-credit-card"></i> Checkout

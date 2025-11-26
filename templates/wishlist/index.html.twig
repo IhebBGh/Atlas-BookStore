@@ -1,28 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My Wishlist - JuiceStore{% endblock %}
+{% block title %}My Wishlist - Atlas Bookshop{% endblock %}
 
 {% block body %}
 <div class="container my-4">
-    <h1><i class="bi bi-heart"></i> My Wishlist</h1>
+    <h1 class="brand-serif"><i class="bi bi-heart"></i> Saved Titles</h1>
 
     {% if wishlistItems is empty %}
         <div class="alert alert-info text-center py-5">
             <i class="bi bi-heart display-1"></i>
             <h4 class="mt-3">Your wishlist is empty</h4>
-            <p>Start adding products to your wishlist!</p>
-            <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Browse Products</a>
+            <p>Tap the heart on any book to save it for later.</p>
+            <a href="{{ path('app_home') }}" class="btn btn-primary mt-3">Browse Books</a>
         </div>
     {% else %}
         <div class="row g-4">
             {% for item in wishlistItems %}
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100">
+                    <div class="card h-100 floating-card border-0">
                         {% if item.product.image %}
                             <img src="{{ asset('uploads/products/' ~ item.product.image) }}" class="card-img-top" alt="{{ item.product.Nom }}" style="height: 200px; object-fit: cover;">
                         {% else %}
-                            <div style="height: 200px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center;">
-                                <span style="font-size: 4rem;">🍹</span>
+                            <div style="height: 200px; background: linear-gradient(135deg, #2d2a44, #5c8d89); display: flex; align-items: center; justify-content: center; color: #fff;">
+                                <span style="font-size: 3rem;"><i class="bi bi-book"></i></span>
                             </div>
                         {% endif %}
                         <div class="card-body d-flex flex-column">
@@ -35,7 +35,7 @@
                                 {{ item.product.Description|length > 80 ? item.product.Description|slice(0, 80) ~ '...' : item.product.Description }}
                             </p>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="h5 mb-0 text-primary">{{ item.product.price|number_format(2, ',', ' ') }} TND</span>
+                                <span class="h5 mb-0 text-ink">{{ item.product.price|number_format(2, ',', ' ') }} TND</span>
                             </div>
                             <div class="d-flex gap-2 mt-auto">
                                 <a href="{{ path('app_product_show', {id: item.product.id}) }}" class="btn btn-outline-primary flex-grow-1">
